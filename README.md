@@ -4,6 +4,8 @@ This repository elaborates on on node's [skimpy instructions](https://nodejs.org
 
 I wrote a guide [here](https://notes.billmill.org/programming/javascript/Making_a_single-file_executable_with_node_and_esbuild.html) that walks you step by step through how you might end up with something similar to the code in this repository.
 
+This repository's main addition to that article is a simple `Makefile` that will build the executable binary into `dist/sum` on either mac or linux.
+
 ## Building the code in this repository
 
 On a mac or linux computer:
@@ -43,6 +45,10 @@ $ dist/sum 1 2 3 4
 $ ls -alh dist/sum
 -rwxr-xr-x@ 1 llimllib  staff    82M Jan 27 16:24 dist/sum*
 ```
+
+## Why make?
+
+Because it's still great at what it was meant to do: build binaries out of source files when they change.
 
 ## TODO
 
