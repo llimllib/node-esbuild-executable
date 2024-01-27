@@ -6,7 +6,12 @@ I wrote a guide [here](https://notes.billmill.org/programming/javascript/Making_
 
 ## Building the code in this repository
 
-On a mac or linux computer, execute `make` and you should end up with a `sum` binary in the `dist` folder, which will sum up all the numbers you pass to it.
+On a mac or linux computer:
+
+- clone this repository and cd into it
+- execute `make`
+
+You should end up with a `sum` binary in the `dist` folder, which will be an executable file that sums up all the numbers you pass to it.
 
 For example:
 
