@@ -1,0 +1,1 @@
+export function sum(ns) { return ns.reduce((x,y) => x+y, 0) }
