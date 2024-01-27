@@ -36,8 +36,13 @@ codesign --sign - dist/rb
 
 $ dist/sum 1 2 3 4
 10
+
+# the file's not small, but at least it works!
+$ ls -alh dist/sum
+-rwxr-xr-x@ 1 llimllib  staff    82M Jan 27 16:24 dist/sum*
 ```
 
 ## TODO
 
 - I would love to support windows! But I haven't used a windows computer in 20 years. Pull requests would be gladly accepted
+- I'd also love ideas about how to make the binary any smaller than its current weight of 82 megabytes
