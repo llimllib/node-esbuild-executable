@@ -7,7 +7,7 @@ JS_FILES := $(shell git ls-files '*.js')
 # https://nodejs.org/api/single-executable-applications.html
 #
 # $@ means "the name of this target"
-dist/sum: dist/bundle.js
+dist/sum: dist/bundle.js dependencies
 	node --experimental-sea-config sea-config.json
 	cp $(NODE_BIN) $@
 ifeq ($(UNAME_S),Darwin)
@@ -31,6 +31,10 @@ dist/bundle.js: $(JS_FILES)
 		--bundle \
 		--outfile=$@ \
 		index.js
+
+.PHONY: dependencies
+dependencies:
+	npm i
 
 .PHONY: clean
 clean:

@@ -12,27 +12,24 @@ For example:
 
 ```console
 $ make
-npx esbuild \
-		--format=cjs \
-		--target=node20 \
-		--platform=node \
-		--bundle \
-		--outfile=dist/bundle.js \
-		index.js
+npm i
 
-  dist/bundle.js  8.8kb
+up to date, audited 4 packages in 618ms
 
-⚡ Done in 3ms
+1 package is looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
 node --experimental-sea-config sea-config.json
 Wrote single executable preparation blob to dist/sea-prep.blob
-cp /Users/llimllib/.local/share/asdf/installs/nodejs/20.2.0/bin/node dist/rb
-codesign --remove-signature dist/rb
-npx postject dist/rb NODE_SEA_BLOB dist/sea-prep.blob \
+cp /Users/llimllib/.local/share/asdf/installs/nodejs/20.2.0/bin/node dist/sum
+codesign --remove-signature dist/sum
+npx postject dist/sum NODE_SEA_BLOB dist/sea-prep.blob \
 		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
 		--macho-segment-name NODE_SEA 
-Start injection of NODE_SEA_BLOB in dist/rb...
+Start injection of NODE_SEA_BLOB in dist/sum...
 💉 Injection done!
-codesign --sign - dist/rb
+codesign --sign - dist/sum
 
 $ dist/sum 1 2 3 4
 10
