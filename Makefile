@@ -6,7 +6,7 @@ JS_FILES := $(shell git ls-files '*.js')
 #
 # https://nodejs.org/api/single-executable-applications.html
 #
-# $@ means "the name of this target"
+# $@ means "the name of this target", which is "dist/sum" in this case
 dist/sum: dist/bundle.js dependencies
 	node --experimental-sea-config sea-config.json
 	cp $(NODE_BIN) $@
@@ -17,7 +17,7 @@ ifeq ($(UNAME_S),Darwin)
 		--macho-segment-name NODE_SEA 
 	codesign --sign - $@
 else
-	npx postject dist/rb NODE_SEA_BLOB dist/sea-prep.blob \
+	npx postject $@ NODE_SEA_BLOB dist/sea-prep.blob \
 		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
 endif
 
