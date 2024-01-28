@@ -39,3 +39,10 @@ dependencies:
 .PHONY: clean
 clean:
 	rm dist/*
+
+# to test on linux, build the dockerfile and run it; it should output "10"
+# after a whole bunch of building output
+.PHONY: test-on-linux
+test-on-linux:
+	docker build -t sum . && \
+		docker run --rm sum
