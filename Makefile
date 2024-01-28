@@ -7,7 +7,7 @@ JS_FILES := $(shell git ls-files '*.js')
 # https://nodejs.org/api/single-executable-applications.html
 #
 # $@ means "the name of this target", which is "dist/sum" in this case
-dist/sum: dist/bundle.js dependencies
+dist/sum: dependencies dist/bundle.js
 	node --experimental-sea-config sea-config.json
 	cp $(NODE_BIN) $@
 ifeq ($(UNAME_S),Darwin)
