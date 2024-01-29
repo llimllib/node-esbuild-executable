@@ -54,3 +54,4 @@ Because it's still great at what it was meant to do: build binaries out of sourc
 
 - I would love to support windows! But I haven't used a windows computer in 20 years. Pull requests would be gladly accepted
 - I'd also love ideas about how to make the binary any smaller than its current weight of 82 megabytes
+- add a demo of [bytecode compiling](https://github.com/nodejs/single-executable/issues/66#issuecomment-1517250431) with [bytenode](https://www.npmjs.com/package/bytenode)
