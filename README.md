@@ -91,7 +91,7 @@ You can build a deno version of this binary with `make dist/sum_deno`, which run
 
 **Cons**
 
-- the resulting binary is very large (118mb)
+- the resulting binary is very large (104mb)
   - (did I do something wrong?)
 - the resulting binary is slower than the node executable, and much slower than the bun executable:
 
