@@ -81,8 +81,30 @@ to fill those caches before the actual benchmark. Alternatively, use the '--prep
 **Cons**
 - bun is a rapidly evolving distribution and still has bugs in its node compatibility
 
+## Comparison with deno
 
-## Why make?
+You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
+
+**Pros**
+
+- much simpler compilation command
+
+**Cons**
+
+- the resulting binary is very large (118mb)
+  - (did I do something wrong?)
+- the resulting binary is slower than the node executable, and much slower than the bun executable:
+
+```
+$ hyperfine "dist/sum_deno 1 2 3 4"
+Benchmark 1: dist/sum_deno 1 2 3 4
+  Time (mean ± σ):     172.8 ms ± 478.6 ms    [User: 13.9 ms, System: 7.4 ms]
+  Range (min … max):    20.2 ms … 1534.8 ms    10 runs
+ 
+  Warning: The first benchmarking run for this command was significantly slower than the rest (1.535 s). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each tim ing run.
+```
+
+## Why use make?
 
 Because it's still great at what it was meant to do: build binaries out of source files when they change.
 

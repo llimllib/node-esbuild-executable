@@ -38,6 +38,9 @@ dist/bundle.js: $(JS_FILES)
 dist/sum_bun: dependencies
 	bun build --compile index.js --outfile $@
 
+dist/sum_deno:
+	deno compile -o dist/sum_deno ./deno/index.js
+
 .PHONY: dependencies
 dependencies:
 	npm i
