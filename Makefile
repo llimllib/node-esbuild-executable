@@ -39,7 +39,10 @@ dist/sum_bun: dependencies
 	bun build --compile index.js --outfile $@
 
 dist/sum_deno:
-	deno compile -o dist/sum_deno ./deno/index.js
+	deno compile \
+		--node-modules-dir=false \
+		-o dist/sum_deno \
+		./deno/index.js
 
 .PHONY: dependencies
 dependencies:
