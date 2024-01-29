@@ -32,6 +32,12 @@ dist/bundle.js: $(JS_FILES)
 		--outfile=$@ \
 		index.js
 
+# an example of how to build a similar executable with the bun runtime
+# https://bun.sh/
+# https://bun.sh/docs/bundler
+dist/sum_bun: dependencies
+	bun build --compile index.js --outfile $@
+
 .PHONY: dependencies
 dependencies:
 	npm i

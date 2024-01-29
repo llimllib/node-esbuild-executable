@@ -46,6 +46,42 @@ $ ls -alh dist/sum
 -rwxr-xr-x@ 1 llimllib  staff    82M Jan 27 16:24 dist/sum*
 ```
 
+## Comparison with bun
+
+You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
+
+**Pros**
+- faster to build
+- much simpler build command
+- executable is 46mb, vs 82mb for node
+- the executable runs about twice as fast on my system
+
+```
+$ hyperfine "dist/sum 1 2 3 4"           
+Benchmark 1: dist/sum 1 2 3 4
+  Time (mean ± σ):     147.4 ms ± 389.5 ms    [User: 19.8 ms, System: 5.1 ms]
+  Range (min … max):    23.6 ms … 1255.8 ms    10 runs
+ 
+  Warning: The first benchmarking run for this command was significantly slower than the rest (1.256 s). This could be caus
+ed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option t
+o fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each 
+timing run.
+ 
+$ hyperfine "dist/sum_bun 1 2 3 4"
+Benchmark 1: dist/sum_bun 1 2 3 4
+  Time (mean ± σ):      73.6 ms ± 195.7 ms    [User: 6.6 ms, System: 5.9 ms]
+  Range (min … max):    10.8 ms … 630.6 ms    10 runs
+ 
+  Warning: The first benchmarking run for this command was significantly slower than the rest (630.6 ms). This could be cau
+sed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option 
+to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each
+ timing run.
+```
+
+**Cons**
+- bun is a rapidly evolving distribution and still has bugs in its node compatibility
+
+
 ## Why make?
 
 Because it's still great at what it was meant to do: build binaries out of source files when they change.
