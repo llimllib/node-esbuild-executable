@@ -1,5 +1,11 @@
 # Making a single-file executable with node and esbuild
 
+This repository elaborates on on node's [skimpy instructions](https://nodejs.org/api/single-executable-applications.html) by showing how you might bundle an app with multiple files and a dependency, and build it into an executable binary.
+
+I wrote a guide [here](https://notes.billmill.org/programming/javascript/Making_a_single-file_executable_with_node_and_esbuild.html) that walks you step by step through how you might end up with something similar to the code in this repository.
+
+This repository's main addition to that article is a simple `Makefile` that will build the executable binary into `dist/sum` on either mac or linux.
+
 - [Building the code in this repository](#building-the-code-in-this-repository)
 - [Stripping the binary](#stripping-the-binary)
 - [Comparison with bun](#comparison-with-bun)
@@ -7,11 +13,6 @@
 - [Why use make?](#why-use-make)
 - [TODO](#todo)
 
-This repository elaborates on on node's [skimpy instructions](https://nodejs.org/api/single-executable-applications.html) by showing how you might bundle an app with multiple files and a dependency, and build it into an executable binary.
-
-I wrote a guide [here](https://notes.billmill.org/programming/javascript/Making_a_single-file_executable_with_node_and_esbuild.html) that walks you step by step through how you might end up with something similar to the code in this repository.
-
-This repository's main addition to that article is a simple `Makefile` that will build the executable binary into `dist/sum` on either mac or linux.
 
 ## Building the code in this repository
 
