@@ -46,6 +46,14 @@ $ ls -alh dist/sum
 -rwxr-xr-x@ 1 llimllib  staff    82M Jan 27 16:24 dist/sum*
 ```
 
+## Stripping the binary
+
+Using [`strip`](https://www.man7.org/linux/man-pages/man1/strip.1.html) to remove debug symbols from the node binary results in a binary that is 66 megabytes instead of 82 on my local computer, with node v20.2.0.
+
+In the [container provided in this repo](https://github.com/llimllib/node-esbuild-executable/blob/004bfbe97e0d4e516e2d8665003772e95678b150/Dockerfile), it saves about 16mb on the binary.
+
+I'm not sure this is safe to do in general, but it works in this case and saves some space so I've [put it in the Makefile](https://github.com/llimllib/node-esbuild-executable/blob/004bfbe97e0d4e516e2d8665003772e95678b150/Makefile#L13). If you see adverse effects with it, or you want to debug your binary with gdb or lldb, you may want to remove it.
+
 ## Comparison with bun
 
 You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
@@ -112,4 +120,5 @@ Because it's still great at what it was meant to do: build binaries out of sourc
 
 - I would love to support windows! But I haven't used a windows computer in 20 years. Pull requests would be gladly accepted
 - I'd also love ideas about how to make the binary any smaller than its current weight of 82 megabytes
+    - see: [stripping the binary](#stripping-the-binary)
 - add a demo of [bytecode compiling](https://github.com/nodejs/single-executable/issues/66#issuecomment-1517250431) with [bytenode](https://www.npmjs.com/package/bytenode)
