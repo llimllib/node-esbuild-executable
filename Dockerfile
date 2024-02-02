@@ -1,5 +1,5 @@
 # this file is used to test this repo on linux
-from node:latest
+FROM node:latest
 
 # download and build the example
 RUN git clone https://github.com/llimllib/node-esbuild-executable.git && \
