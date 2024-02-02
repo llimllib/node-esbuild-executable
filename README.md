@@ -96,6 +96,8 @@ to fill those caches before the actual benchmark. Alternatively, use the '--prep
 
 **Cons**
 - bun is a rapidly evolving distribution and still has bugs in its node compatibility
+    - for example, a recent program I tried to build with `bun` hit [this showstopper bug](https://github.com/oven-sh/bun/issues/6832). Every program I've tried to build with bun so far has hit a bug somewhere or other with bun's node compatibility.
+    - my recommendation would be to build with bun only if you intend to exclusively build with bun as a target; otherwise you're likely to suffer compatibility bugs like this one at unexpected and inconvenient times
 
 ## Comparison with deno
 
