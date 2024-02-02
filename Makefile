@@ -10,6 +10,7 @@ JS_FILES := $(shell git ls-files '*.js')
 dist/sum: dependencies dist/bundle.js
 	node --experimental-sea-config sea-config.json
 	cp $(NODE_BIN) $@
+	strip $@
 ifeq ($(UNAME_S),Darwin)
 	codesign --remove-signature $@
 	npx postject $@ NODE_SEA_BLOB dist/sea-prep.blob \
