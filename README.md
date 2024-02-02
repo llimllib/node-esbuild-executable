@@ -52,7 +52,7 @@ Using [`strip`](https://www.man7.org/linux/man-pages/man1/strip.1.html) to remov
 
 In the [container provided in this repo](https://github.com/llimllib/node-esbuild-executable/blob/d7a6db6083a16732e9995ed824090f131496d2e3/Dockerfile), it saves about 16mb on the binary.
 
-I'm not sure this is safe to do in general, but it works in this case and saves some space so I've [put it in the Makefile](https://github.com/llimllib/node-esbuild-executable/blob/004bfbe97e0d4e516e2d8665003772e95678b150/Makefile#L13). If you see adverse effects with it, or you want to debug your binary with gdb or lldb, you may want to remove it.
+**I'm not sure this is safe to do in general**, but it works in this case and saves some space so I've [put it in the Makefile](https://github.com/llimllib/node-esbuild-executable/blob/004bfbe97e0d4e516e2d8665003772e95678b150/Makefile#L13). If you see adverse effects with it, or you want to debug your binary with `gdb` or `lldb`, you may want to remove it.
 
 ## Comparison with bun
 
