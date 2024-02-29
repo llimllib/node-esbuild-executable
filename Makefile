@@ -1,4 +1,4 @@
-NODE_BIN ?= $(shell asdf which node || nvm which node || command -v node)
+NODE_BIN ?= $(shell asdf which node 2>/dev/null || nvm which node 2>/dev/null || command -v node)
 UNAME_S := $(shell uname -s)
 JS_FILES := $(shell git ls-files '*.js')
 
