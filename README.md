@@ -13,7 +13,6 @@ This repository's main addition to that article is a simple `Makefile` that will
 - [Why use make?](#why-use-make)
 - [TODO](#todo)
 
-
 ## Building the code in this repository
 
 On a mac or linux computer:
@@ -41,7 +40,7 @@ cp /Users/llimllib/.local/share/asdf/installs/nodejs/20.2.0/bin/node dist/sum
 codesign --remove-signature dist/sum
 npx postject dist/sum NODE_SEA_BLOB dist/sea-prep.blob \
 		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
-		--macho-segment-name NODE_SEA 
+		--macho-segment-name NODE_SEA
 Start injection of NODE_SEA_BLOB in dist/sum...
 💉 Injection done!
 codesign --sign - dist/sum
@@ -67,59 +66,59 @@ In the [container provided in this repo](https://github.com/llimllib/node-esbuil
 You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
 
 **Pros**
+
 - faster to build
 - much simpler build command
 - executable is 46mb, vs 82mb for node
 - the executable runs about twice as fast on my system
 
 ```
-$ hyperfine "dist/sum 1 2 3 4"           
+$ hyperfine "dist/sum 1 2 3 4"
 Benchmark 1: dist/sum 1 2 3 4
   Time (mean ± σ):     147.4 ms ± 389.5 ms    [User: 19.8 ms, System: 5.1 ms]
   Range (min … max):    23.6 ms … 1255.8 ms    10 runs
- 
+
   Warning: The first benchmarking run for this command was significantly slower than the rest (1.256 s). This could be caus
 ed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option t
-o fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each 
+o fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each
 timing run.
- 
+
 $ hyperfine "dist/sum_bun 1 2 3 4"
 Benchmark 1: dist/sum_bun 1 2 3 4
   Time (mean ± σ):      73.6 ms ± 195.7 ms    [User: 6.6 ms, System: 5.9 ms]
   Range (min … max):    10.8 ms … 630.6 ms    10 runs
- 
+
   Warning: The first benchmarking run for this command was significantly slower than the rest (630.6 ms). This could be cau
-sed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option 
+sed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option
 to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each
  timing run.
 ```
 
 **Cons**
+
 - bun is a rapidly evolving distribution and still has bugs in its node compatibility
-    - for example, a recent program I tried to build with `bun` hit [this showstopper bug](https://github.com/oven-sh/bun/issues/6832). Every program I've tried to build with bun so far has hit a bug somewhere or other with bun's node compatibility.
-    - my recommendation would be to build with bun only if you intend to exclusively build with bun as a target; otherwise you're likely to suffer compatibility bugs like this one at unexpected and inconvenient times
+  - for example, a recent program I tried to build with `bun` hit [this showstopper bug](https://github.com/oven-sh/bun/issues/6832). Every program I've tried to build with bun so far has hit a bug somewhere or other with bun's node compatibility.
+  - my recommendation would be to build with bun only if you intend to exclusively build with bun as a target; otherwise you're likely to suffer compatibility bugs like this one at unexpected and inconvenient times
 
 ## Comparison with deno
 
 You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
 
+**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears they have fixed some sort of bug in version 1.41.0, which generates a smaller and faster binary.
+
 **Pros**
 
 - much simpler compilation command
-
-**Cons**
-
-- the resulting binary is very large (104mb)
-  - (did I do something wrong?)
-- the resulting binary is slower than the node executable, and much slower than the bun executable:
+- the resulting binary is between `bun` and node SEA in size (58mb)
+- the resulting binary is the fastest of the three
 
 ```
 $ hyperfine "dist/sum_deno 1 2 3 4"
 Benchmark 1: dist/sum_deno 1 2 3 4
-  Time (mean ± σ):     172.8 ms ± 478.6 ms    [User: 13.9 ms, System: 7.4 ms]
-  Range (min … max):    20.2 ms … 1534.8 ms    10 runs
- 
-  Warning: The first benchmarking run for this command was significantly slower than the rest (1.535 s). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each tim ing run.
+  Time (mean ± σ):      66.1 ms ± 149.5 ms    [User: 13.8 ms, System: 6.6 ms]
+  Range (min … max):    18.0 ms … 491.7 ms    10 runs
+
+  Warning: The first benchmarking run for this command was significantly slower than the rest (491.7 ms). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each timing run.
 ```
 
 ## Why use make?
@@ -130,5 +129,5 @@ Because it's still great at what it was meant to do: build binaries out of sourc
 
 - I would love to support windows! But I haven't used a windows computer in 20 years. Pull requests would be gladly accepted
 - I'd also love ideas about how to make the binary any smaller than its current weight of 82 megabytes
-    - see: [stripping the binary](#stripping-the-binary)
+  - see: [stripping the binary](#stripping-the-binary)
 - add a demo of [bytecode compiling](https://github.com/nodejs/single-executable/issues/66#issuecomment-1517250431) with [bytenode](https://www.npmjs.com/package/bytenode)
