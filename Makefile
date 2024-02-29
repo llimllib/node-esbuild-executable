@@ -53,6 +53,22 @@ dependencies:
 clean:
 	rm dist/*
 
+.PHONY: time_builds
+time_builds:
+	node --version
+	time $(MAKE) dist/sum
+	bun --version
+	time $(MAKE) dist/sum_bun
+	deno --version
+	time $(MAKE) dist/sum_deno
+
+.PHONY: bench
+bench: clean time_builds
+	hyperfine "dist/sum {1..10000}"
+	hyperfine "dist/sum_bun {1..10000}"
+	hyperfine "dist/sum_deno {1..10000}"
+	ls -alh dist/sum*
+
 # to test on linux, build the dockerfile and run it; it should output "10"
 # after a whole bunch of building output
 .PHONY: test-on-linux
