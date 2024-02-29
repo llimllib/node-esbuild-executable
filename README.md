@@ -8,6 +8,7 @@ This repository's main addition to that article is a simple `Makefile` that will
 
 - [Building the code in this repository](#building-the-code-in-this-repository)
 - [Stripping the binary](#stripping-the-binary)
+- [Benchmarks](#benchmarks)
 - [Comparison with bun](#comparison-with-bun)
 - [Comparison with deno](#comparison-with-deno)
 - [Why use make?](#why-use-make)
@@ -61,6 +62,18 @@ In the [container provided in this repo](https://github.com/llimllib/node-esbuil
 
 **I'm not sure this is safe to do in general**, but it works in this case and saves some space so I've [put it in the Makefile](https://github.com/llimllib/node-esbuild-executable/blob/004bfbe97e0d4e516e2d8665003772e95678b150/Makefile#L13). If you see adverse effects with it, or you want to debug your binary with `gdb` or `lldb`, you may want to remove it.
 
+## Benchmarks
+
+`make bench` will run the compilation processes for `node`, `bun`, and `deno` and report build time, the reuslt of a benchmark, and file size.
+
+On my system (Macbook Pro with M1 Max and 32gb ram), which I should emphasize **is not set up to do proper benchmarking** so take this whith a large pile of salt, I get:
+
+| interpreter | version | build (ms) | size (mb) | execution time     |
+| ----------- | ------- | ---------- | --------- | ------------------ |
+| node        | 20.11.1 | 3290       | 67        | 86.6 ms ± 168.0 ms |
+| bun         | 1.0.29  | 690        | 77        | 77.1 ms ± 180.0 ms |
+| deno        | 1.41.0  | 490        | 58        | 76.0 ms ± 147.4 ms |
+
 ## Comparison with bun
 
 You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
@@ -72,29 +85,7 @@ I tested with bun version `1.0.25` against a node binary build with node version
 - faster to build
 - much simpler build command
 - executable is 46mb, vs 82mb for node
-- the executable runs about twice as fast on my system
-
-```
-$ hyperfine "dist/sum 1 2 3 4"
-Benchmark 1: dist/sum 1 2 3 4
-  Time (mean ± σ):     147.4 ms ± 389.5 ms    [User: 19.8 ms, System: 5.1 ms]
-  Range (min … max):    23.6 ms … 1255.8 ms    10 runs
-
-  Warning: The first benchmarking run for this command was significantly slower than the rest (1.256 s). This could be caus
-ed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option t
-o fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each
-timing run.
-
-$ hyperfine "dist/sum_bun 1 2 3 4"
-Benchmark 1: dist/sum_bun 1 2 3 4
-  Time (mean ± σ):      73.6 ms ± 195.7 ms    [User: 6.6 ms, System: 5.9 ms]
-  Range (min … max):    10.8 ms … 630.6 ms    10 runs
-
-  Warning: The first benchmarking run for this command was significantly slower than the rest (630.6 ms). This could be cau
-sed by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option
-to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each
- timing run.
-```
+- the executable runs with low overhead
 
 **Cons**
 
@@ -112,16 +103,7 @@ You can build a deno version of this binary with `make dist/sum_deno`, which run
 
 - much simpler compilation command
 - the resulting binary is between `bun` and node SEA in size (58mb)
-- the resulting binary is the fastest of the three
-
-```
-$ hyperfine "dist/sum_deno 1 2 3 4"
-Benchmark 1: dist/sum_deno 1 2 3 4
-  Time (mean ± σ):      66.1 ms ± 149.5 ms    [User: 13.8 ms, System: 6.6 ms]
-  Range (min … max):    18.0 ms … 491.7 ms    10 runs
-
-  Warning: The first benchmarking run for this command was significantly slower than the rest (491.7 ms). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the '--warmup' option to fill those caches before the actual benchmark. Alternatively, use the '--prepare' option to clear the caches before each timing run.
-```
+- the executable runs with low overhead
 
 ## Why use make?
 
