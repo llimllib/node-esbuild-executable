@@ -36,7 +36,7 @@ up to date, audited 4 packages in 618ms
 found 0 vulnerabilities
 node --experimental-sea-config sea-config.json
 Wrote single executable preparation blob to dist/sea-prep.blob
-cp /Users/llimllib/.local/share/asdf/installs/nodejs/20.2.0/bin/node dist/sum
+cp /Users/llimllib/.local/share/mise/installs/node/latest/bin/node dist/sum
 codesign --remove-signature dist/sum
 npx postject dist/sum NODE_SEA_BLOB dist/sea-prep.blob \
 		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
@@ -64,6 +64,8 @@ In the [container provided in this repo](https://github.com/llimllib/node-esbuil
 ## Comparison with bun
 
 You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
+
+I tested with bun version `1.0.25` against a node binary build with node version `20.11.1`
 
 **Pros**
 
@@ -104,7 +106,7 @@ to fill those caches before the actual benchmark. Alternatively, use the '--prep
 
 You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
 
-**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears they have fixed some sort of bug in version 1.41.0, which generates a smaller and faster binary.
+**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears they have fixed some sort of bug in version 1.41.0, which generates a smaller and faster binary. I used 1.41.0 for the below
 
 **Pros**
 
