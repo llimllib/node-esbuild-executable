@@ -106,7 +106,7 @@ to fill those caches before the actual benchmark. Alternatively, use the '--prep
 
 You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
 
-**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears they have fixed some sort of bug in version 1.41.0, which generates a smaller and faster binary. I used 1.41.0 for the below
+**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears [they have improved executable generation greatly](https://deno.com/blog/v1.41) in version 1.41.0, which generates a smaller and faster binary. I used 1.41.0 for the below
 
 **Pros**
 
