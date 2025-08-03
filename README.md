@@ -68,23 +68,23 @@ In the [container provided in this repo](https://github.com/llimllib/node-esbuil
 
 On my system (Macbook Pro with M1 Max and 32gb ram), which I should emphasize **is not set up to do proper benchmarking** so take this whith a large pile of salt, I get:
 
-| interpreter | version | build (ms) | size (mb) | execution time     |
-| ----------- | ------- | ---------- | --------- | ------------------ |
-| node        | 20.11.1 | 3290       | 67        | 86.6 ms ± 168.0 ms |
-| bun         | 1.0.29  | 690        | 77        | 77.1 ms ± 180.0 ms |
-| deno        | 1.41.0  | 490        | 58        | 76.0 ms ± 147.4 ms |
+| interpreter | version | build (ms) | size (mb) | execution time      |
+| ----------- | ------- | ---------- | --------- | ------------------- |
+| node        | 24.5.0  | 3340       | 86        | 101.6 ms ± 224.5 ms |
+| bun         | 1.1.25  | 1110       | 52        | 69.8 ms ± 160.0 ms  |
+| deno        | 2.4.3   | 850        | 68        | 91.6 ms ± 193.4 ms  |
 
 ## Comparison with bun
 
 You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
 
-I tested with bun version `1.0.25` against a node binary build with node version `20.11.1`
+I tested with bun version `1.1.25` against a node binary build with node version `24.5.0`
 
 **Pros**
 
 - faster to build
 - much simpler build command
-- executable is 46mb, vs 82mb for node
+- the resulting executable is smallest
 - the executable runs with low overhead
 
 **Cons**
@@ -97,13 +97,10 @@ I tested with bun version `1.0.25` against a node binary build with node version
 
 You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
 
-**Update**: Deno version 1.40.2, which I had previously used, generated a very large binary that was extremely slow; it appears [they have improved executable generation greatly](https://deno.com/blog/v1.41) in version 1.41.0, which generates a smaller and faster binary. I used 1.41.0 for the below
-
 **Pros**
 
 - much simpler compilation command
-- the resulting binary is between `bun` and node SEA in size (58mb)
-- the executable runs with low overhead
+- the resulting binary is between `bun` and node SEA in size
 
 ## Why use make?
 
