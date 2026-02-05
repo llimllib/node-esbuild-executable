@@ -84,6 +84,6 @@ On my system (Macbook Pro with M1 Max and 32gb ram), which I should emphasize **
 
 | interpreter | version | build (ms) | size (mb) | execution time   |
 | ----------- | ------- | ---------- | --------- | ---------------- |
-| node        | 25.6.0  | 3420       | 93        | 34.1 ms ± 0.9 ms |
+| node        | 25.6.0  | 2890       | 93        | 34.1 ms ± 0.9 ms |
 | bun         | 1.3.8   | 600        | 57        | 18.6 ms ± 0.7 ms |
 | deno        | 2.6.8   | 790        | 72        | 32.4 ms ± 0.5 ms |
