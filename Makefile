@@ -1,4 +1,3 @@
-NODE_BIN ?= $(shell asdf which node 2>/dev/null || nvm which node 2>/dev/null || command -v node)
 UNAME_S := $(shell uname -s)
 JS_FILES := $(shell git ls-files '*.js')
 
@@ -8,18 +7,12 @@ JS_FILES := $(shell git ls-files '*.js')
 #
 # $@ means "the name of this target", which is "dist/sum" in this case
 dist/sum: dependencies dist/bundle.js
-	node --experimental-sea-config sea-config.json
-	cp $(NODE_BIN) $@
+	echo '{ "main": "dist/bundle.js", "output": "$@", "executable": "$(shell which node)", "disableExperimentalSEAWarning": true }' > sea-config.json
+	node --build-sea sea-config.json
 	strip $@
 ifeq ($(UNAME_S),Darwin)
 	codesign --remove-signature $@
-	npx postject $@ NODE_SEA_BLOB dist/sea-prep.blob \
-		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
-		--macho-segment-name NODE_SEA 
 	codesign --sign - $@
-else
-	npx postject $@ NODE_SEA_BLOB dist/sea-prep.blob \
-		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
 endif
 
 # Create a bundled version of the app, so that we can build an executable out
