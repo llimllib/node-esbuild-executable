@@ -6,7 +6,7 @@ JS_FILES := $(shell git ls-files '*.js')
 # https://nodejs.org/api/single-executable-applications.html
 #
 # $@ means "the name of this target", which is "dist/sum" in this case
-dist/sum: dependencies dist/bundle.js
+dist/sum: package-lock.json dist/bundle.js
 	echo '{ "main": "dist/bundle.js", "output": "$@", "executable": "$(shell which node)", "disableExperimentalSEAWarning": true }' > sea-config.json
 	node --build-sea sea-config.json
 	strip $@
@@ -28,7 +28,7 @@ dist/bundle.js: $(JS_FILES)
 # an example of how to build a similar executable with the bun runtime
 # https://bun.sh/
 # https://bun.sh/docs/bundler
-dist/sum_bun: dependencies
+dist/sum_bun: package-lock.json
 	bun build --compile index.js --outfile $@
 
 dist/sum_deno:
@@ -37,8 +37,7 @@ dist/sum_deno:
 		-o dist/sum_deno \
 		./deno/index.js
 
-.PHONY: dependencies
-dependencies:
+package-lock.json: package.json
 	npm i
 
 .PHONY: clean
