@@ -11,7 +11,6 @@ dist/sum: dependencies dist/bundle.js
 	node --build-sea sea-config.json
 	strip $@
 ifeq ($(UNAME_S),Darwin)
-	codesign --remove-signature $@
 	codesign --sign - $@
 endif
 
@@ -57,9 +56,7 @@ time_builds:
 
 .PHONY: bench
 bench: clean time_builds
-	hyperfine "dist/sum {1..10000}"
-	hyperfine "dist/sum_bun {1..10000}"
-	hyperfine "dist/sum_deno {1..10000}"
+	hyperfine -w3 "dist/sum {1..10000}" "dist/sum_bun {1..10000}" "dist/sum_deno {1..10000}"
 	ls -alh dist/sum*
 
 # to test on linux, build the dockerfile and run it; it should output "10"

@@ -31,29 +31,41 @@ For example:
 $ make
 npm i
 
-up to date, audited 4 packages in 618ms
+up to date, audited 6 packages in 466ms
 
 1 package is looking for funding
   run `npm fund` for details
 
-found 0 vulnerabilities
-node --experimental-sea-config sea-config.json
-Wrote single executable preparation blob to dist/sea-prep.blob
-cp /Users/llimllib/.local/share/mise/installs/node/latest/bin/node dist/sum
+1 moderate severity vulnerability
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npx esbuild \
+		--format=cjs \
+		--target=node20 \
+		--platform=node \
+		--bundle \
+		--outfile=dist/bundle.js \
+		index.js
+
+  dist/bundle.js  8.8kb
+
+⚡ Done in 2ms
+echo '{ "main": "dist/bundle.js", "output": "dist/sum", "executable": "/Users/llimllib/.local/share/mise/installs/node/25.6.0/bin/node", "disableExperimentalSEAWarning": true }' > sea-config.json
+node --build-sea sea-config.json
+Generated single executable /Users/llimllib/.local/share/mise/installs/node/25.6.0/bin/node + sea-config.json -> dist/sum
+strip dist/sum
 codesign --remove-signature dist/sum
-npx postject dist/sum NODE_SEA_BLOB dist/sea-prep.blob \
-		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
-		--macho-segment-name NODE_SEA
-Start injection of NODE_SEA_BLOB in dist/sum...
-💉 Injection done!
 codesign --sign - dist/sum
 
 $ dist/sum 1 2 3 4
 10
 
 # the file's not small, but at least it works!
-$ ls -alh dist/sum
--rwxr-xr-x@ 1 llimllib  staff    82M Jan 27 16:24 dist/sum*
+$ ls -lah dist/sum
+.rwxr-xr-x   93M llimllib  4 Feb 23:10  󰡯  dist/sum
 ```
 
 ## Stripping the binary
@@ -70,47 +82,8 @@ In the [container provided in this repo](https://github.com/llimllib/node-esbuil
 
 On my system (Macbook Pro with M1 Max and 32gb ram), which I should emphasize **is not set up to do proper benchmarking** so take this whith a large pile of salt, I get:
 
-| interpreter | version | build (ms) | size (mb) | execution time      |
-| ----------- | ------- | ---------- | --------- | ------------------- |
-| node        | 24.5.0  | 3340       | 86        | 101.6 ms ± 224.5 ms |
-| bun         | 1.1.25  | 1110       | 52        | 69.8 ms ± 160.0 ms  |
-| deno        | 2.4.3   | 850        | 68        | 91.6 ms ± 193.4 ms  |
-
-## Comparison with bun
-
-You can build a binary with [bun](https://bun.sh/docs/bundler#target), if you have it installed, by running `make dist/sum_bun`
-
-I tested with bun version `1.1.25` against a node binary build with node version `24.5.0`
-
-**Pros**
-
-- faster to build
-- much simpler build command
-- the resulting executable is smallest
-- the executable runs with low overhead
-
-**Cons**
-
-- bun is a rapidly evolving distribution and still has bugs in its node compatibility
-  - for example, a recent program I tried to build with `bun` hit [this showstopper bug](https://github.com/oven-sh/bun/issues/6832). Every program I've tried to build with bun so far has hit a bug somewhere or other with bun's node compatibility.
-  - my recommendation would be to build with bun only if you intend to exclusively build with bun as a target; otherwise you're likely to suffer compatibility bugs like this one at unexpected and inconvenient times
-
-## Comparison with deno
-
-You can build a deno version of this binary with `make dist/sum_deno`, which runs `deno compile -o dist/sum_deno ./deno/index.js`
-
-**Pros**
-
-- much simpler compilation command
-- the resulting binary is between `bun` and node SEA in size
-
-## Why use make?
-
-Because it's still great at what it was meant to do: build binaries out of source files when they change.
-
-## TODO
-
-- I would love to support windows! But I haven't used a windows computer in 20 years. Pull requests would be gladly accepted
-- I'd also love ideas about how to make the binary any smaller than its current weight of 82 megabytes
-  - see: [stripping the binary](#stripping-the-binary)
-- add a demo of [bytecode compiling](https://github.com/nodejs/single-executable/issues/66#issuecomment-1517250431) with [bytenode](https://www.npmjs.com/package/bytenode)
+| interpreter | version | build (ms) | size (mb) | execution time   |
+| ----------- | ------- | ---------- | --------- | ---------------- |
+| node        | 25.6.0  | 3420       | 93        | 34.1 ms ± 0.9 ms |
+| bun         | 1.3.8   | 600        | 57        | 18.6 ms ± 0.7 ms |
+| deno        | 2.6.8   | 790        | 72        | 32.4 ms ± 0.5 ms |
